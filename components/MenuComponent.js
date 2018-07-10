@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, TouchableOpacity } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { DISHES } from '../shared/dishes';
 
@@ -16,20 +16,20 @@ class Menu extends Component {
     }
     renderMenuItem = ({ item, index }) => {
         return (
-            <ListItem
-                key={index}
-                title={item.name}
-                subtitle={item.description}
-                hideChevron={true}
-                leftAvatar={{ source: require('./images/uthappizza.png') }}
-            />
+            <TouchableOpacity  onPress={() => this.props.navigation.navigate('DishDetail', { dishId: item.id })}>
+                <ListItem
+                    key={index}
+                    title={item.name}
+                    subtitle={item.description}
+                    hideChevron={true}
+                    leftAvatar={{ source: require('./images/uthappizza.png') }}
+                />
+            </TouchableOpacity>
         );
     };
     render() {
-        const { navigate } = this.props.navigation;
         return (
             <FlatList
-                onPress={() => navigate('DishDetail', { dishId: item.id })}
                 data={this.state.dishes}
                 renderItem={this.renderMenuItem}
                 keyExtractor={item => item.id.toString()}
