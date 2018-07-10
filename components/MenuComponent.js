@@ -2,6 +2,16 @@ import React, { Component } from 'react';
 import { FlatList, TouchableOpacity } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { DISHES } from '../shared/dishes';
+import { Tile } from 'react-native-elements';
+import { connect } from 'react-redux';
+import { baseUrl } from '../shared/baseUrl';
+
+
+const mapStateToProps = state => {
+    return {
+        dishes: state.dishes
+    }
+}
 
 class Menu extends Component {
 
@@ -16,13 +26,13 @@ class Menu extends Component {
     }
     renderMenuItem = ({ item, index }) => {
         return (
-            <TouchableOpacity  onPress={() => this.props.navigation.navigate('DishDetail', { dishId: item.id })}>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('DishDetail', { dishId: item.id })}>
                 <ListItem
                     key={index}
                     title={item.name}
                     subtitle={item.description}
                     hideChevron={true}
-                    leftAvatar={{ source: require('./images/uthappizza.png') }}
+                    imageSrc={{ uri: baseUrl + item.image}}
                 />
             </TouchableOpacity>
         );
@@ -30,12 +40,12 @@ class Menu extends Component {
     render() {
         return (
             <FlatList
-                data={this.state.dishes}
-                renderItem={this.renderMenuItem}
+                data={this.props.dishes.dishes}
+                renderItem={renderMenuItem}
                 keyExtractor={item => item.id.toString()}
             />
         );
     };
 }
 
-export default Menu;
+export default connect(mapStateToProps)(Menu);
