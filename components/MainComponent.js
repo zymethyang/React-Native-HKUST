@@ -12,7 +12,9 @@ import Home from './HomeComponent';
 import { connect } from 'react-redux';
 import { fetchDishes, fetchComments, fetchPromos, fetchLeaders } from '../redux/ActionCreators';
 
-import { Entypo } from '@expo/vector-icons';
+import { Entypo,FontAwesome } from '@expo/vector-icons';
+
+import Favorites from './FavoriteComponent';
 
 const mapStateToProps = state => {
     return {
@@ -109,6 +111,22 @@ const ReservationNavigator = createStackNavigator({
         })
     })
 
+const FavoritesNavigator = createStackNavigator({
+    Favorites: { screen: Favorites }
+}, {
+        navigationOptions: ({ navigation }) => ({
+            headerStyle: {
+                backgroundColor: "#512DA8"
+            },
+            headerTitleStyle: {
+                color: "#fff"
+            },
+            headerTintColor: "#fff",
+            headerLeft: <Entypo name="menu" size={24}
+                iconStyle={{ color: 'white' }}
+                onPress={() => navigation.navigate('DrawerToggle')} />
+        })
+    })
 
 const MainNavigator = createDrawerNavigator({
     Home:
@@ -150,10 +168,26 @@ const MainNavigator = createDrawerNavigator({
                 <Entypo name="menu" size={32} style={{ color: tintColor }} />
             ),
         }
+    },
+    Favorites:{
+        screen: FavoritesNavigator,
+        navigationOptions: {
+            title: 'My Favorites',
+            drawerLabel: 'My Favorites',
+            drawerIcon: ({ tintColor, focused }) => (
+                <FontAwesome
+                    name='heart'
+                    size={24}
+                    iconStyle={{ color: tintColor }}
+                />
+            ),
+        }
     }
 }, {
-        drawerBackgroundColor: '#D1C4E9'
-    });
+    drawerBackgroundColor: '#D1C4E9'
+});
+
+
 
 
 class Main extends Component {
