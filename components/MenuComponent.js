@@ -27,6 +27,7 @@ class Menu extends Component {
         title: 'Menu'
     }
     renderMenuItem = ({ item, index }) => {
+        const { navigate } = this.props.navigation;
         return (
             <Animatable.View animation="fadeInRightBig" duration={2000}>
                 <Tile
@@ -34,7 +35,7 @@ class Menu extends Component {
                     title={item.name}
                     caption={item.description}
                     featured
-                    onPress={() => navigate('Dishdetail', { dishId: item.id })}
+                    onPress={() => navigate('DishDetail', { dishId: item.id })}
                     imageSrc={{ uri: baseUrl + item.image }}
                 />
             </Animatable.View>
