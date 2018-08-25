@@ -16,7 +16,7 @@ class About extends Component {
         title: 'About Us',
     };
 
-    renderMenuItem = ({ item, index }) => {
+    renderLeader = ({ item, index }) => {
         return (
             <ListItem
                 key={index}
@@ -67,7 +67,7 @@ class About extends Component {
                         title='Corporate Leadership'>
                         <FlatList
                             data={this.props.leaders.leaders}
-                            renderItem={renderLeader}
+                            renderItem={this.renderLeader}
                             keyExtractor={item => item.id.toString()}
                         />
                     </Card>

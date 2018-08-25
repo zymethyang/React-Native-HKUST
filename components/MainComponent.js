@@ -12,6 +12,7 @@ import Home from './HomeComponent';
 import { connect } from 'react-redux';
 import { fetchDishes, fetchComments, fetchPromos, fetchLeaders } from '../redux/ActionCreators';
 
+import { Entypo } from '@expo/vector-icons';
 
 const mapStateToProps = state => {
     return {
@@ -102,9 +103,9 @@ const ReservationNavigator = createStackNavigator({
                 color: "#fff"
             },
             headerTintColor: "#fff",
-            headerLeft: <Icon name="menu" size={24}
-                iconStyle={{ color: 'white' }}
-                onPress={() => navigation.navigate('DrawerToggle')} />
+            headerLeft:
+                <Entypo name="menu" size={32} style={{ color: 'white' }}
+                    onPress={() => navigation.navigate('DrawerToggle')} />
         })
     })
 
@@ -146,12 +147,7 @@ const MainNavigator = createDrawerNavigator({
             title: 'Reserve Table',
             drawerLabel: 'Reserve Table',
             drawerIcon: ({ tintColor, focused }) => (
-                <Icon
-                    name='cutlery'
-                    type='font-awesome'
-                    size={24}
-                    iconStyle={{ color: tintColor }}
-                />
+                <Entypo name="menu" size={32} style={{ color: tintColor }} />
             ),
         }
     }
