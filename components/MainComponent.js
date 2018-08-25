@@ -16,6 +16,7 @@ import { Entypo,FontAwesome } from '@expo/vector-icons';
 
 import Favorites from './FavoriteComponent';
 
+
 const mapStateToProps = state => {
     return {
         dishes: state.dishes,
