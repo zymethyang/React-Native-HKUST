@@ -4,7 +4,7 @@ import DishDetail from './DIshdetailComponent';
 import Contact from './ContactComponent';
 import About from './AboutComponent';
 import Reservation from './ReservationComponent';
-
+import Login from './LoginComponent';
 
 import { View, Platform } from 'react-native';
 import { createStackNavigator, createDrawerNavigator } from 'react-navigation';
@@ -12,7 +12,7 @@ import Home from './HomeComponent';
 import { connect } from 'react-redux';
 import { fetchDishes, fetchComments, fetchPromos, fetchLeaders } from '../redux/ActionCreators';
 
-import { Entypo,FontAwesome } from '@expo/vector-icons';
+import { Entypo, FontAwesome } from '@expo/vector-icons';
 
 import Favorites from './FavoriteComponent';
 
@@ -129,6 +129,23 @@ const FavoritesNavigator = createStackNavigator({
         })
     })
 
+const LoginNavigator = createStackNavigator({
+    Login: { screen: Login }
+}, {
+        navigationOptions: ({ navigation }) => ({
+            headerStyle: {
+                backgroundColor: "#512DA8"
+            },
+            headerTitleStyle: {
+                color: "#fff"
+            },
+            headerTintColor: "#fff",
+            headerLeft: <Entypo name="menu" size={24}
+                iconStyle={{ color: 'white' }}
+                onPress={() => navigation.toggleDrawer()} />
+        })
+    });
+
 const MainNavigator = createDrawerNavigator({
     Home:
     {
@@ -170,7 +187,7 @@ const MainNavigator = createDrawerNavigator({
             ),
         }
     },
-    Favorites:{
+    Favorites: {
         screen: FavoritesNavigator,
         navigationOptions: {
             title: 'My Favorites',
@@ -183,10 +200,25 @@ const MainNavigator = createDrawerNavigator({
                 />
             ),
         }
-    }
+    },
+    Login: {
+        screen: LoginNavigator,
+        navigationOptions: {
+            title: 'Login',
+            drawerLabel: 'Login',
+            drawerIcon: ({ tintColor, focused }) => (
+                <FontAwesome
+                    name='sign-in'
+                    size={24}
+                    iconStyle={{ color: tintColor }}
+                />
+            ),
+        }
+    },
 }, {
-    drawerBackgroundColor: '#D1C4E9'
-});
+        initialRouteName: 'Home',
+        drawerBackgroundColor: '#D1C4E9',
+    });
 
 
 
