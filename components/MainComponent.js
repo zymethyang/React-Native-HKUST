@@ -129,8 +129,10 @@ const FavoritesNavigator = createStackNavigator({
         })
     })
 
+
+
 const LoginNavigator = createStackNavigator({
-    Login: { screen: Login }
+    Login: Login
 }, {
         navigationOptions: ({ navigation }) => ({
             headerStyle: {
@@ -139,12 +141,14 @@ const LoginNavigator = createStackNavigator({
             headerTitleStyle: {
                 color: "#fff"
             },
+            title: 'Login',
             headerTintColor: "#fff",
-            headerLeft: <Entypo name="menu" size={24}
+            headerLeft: <Icon name="menu" size={24}
                 iconStyle={{ color: 'white' }}
                 onPress={() => navigation.toggleDrawer()} />
         })
     });
+
 
 const MainNavigator = createDrawerNavigator({
     Home:
