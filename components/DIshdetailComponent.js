@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView, FlatList, Modal, StyleSheet, Button, Alert, PanResponder } from 'react-native';
+import { Text, View, ScrollView, FlatList, Modal, StyleSheet, Button, Alert, Share, PanResponder } from 'react-native';
 import { Card, Icon, Rating, Input } from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
 import { baseUrl } from '../shared/baseUrl';
@@ -45,7 +45,7 @@ function RenderDish(props) {
   };
 
   const recognizeComment = ({ moveX, moveY, dx, dy }) => {
-    return (dx > 200? true : false);
+    return (dx > 200 ? true : false);
   };
 
   const panResponder = PanResponder.create({
@@ -68,7 +68,7 @@ function RenderDish(props) {
           { cancelable: false }
         );
       }
-      
+
       if (recognizeComment(gestureState)) {
         props.onShowModal();
       }
@@ -76,6 +76,16 @@ function RenderDish(props) {
       return true;
     }
   });
+
+  const shareDish = (title, message, url) => {
+    Share.share({
+      title: title,
+      message: title + ': ' + message + ' ' + url,
+      url: url
+    }, {
+        dialogTitle: 'Share ' + title
+      })
+  }
 
   if (dish != null) {
     return (
@@ -89,12 +99,20 @@ function RenderDish(props) {
             {dish.description}
           </Text>
           <View style={styles.actions}>
-            <Icon raised reverse name={props.favorite ? 'heart' : 'heart-o' } 
-              type='font-awesome' color='#f50' 
-              onPress={() => props.favorite ? console.log('Already favorite!') : props.onPress() } />
+            <Icon raised reverse name={props.favorite ? 'heart' : 'heart-o'}
+              type='font-awesome' color='#f50'
+              onPress={() => props.favorite ? console.log('Already favorite!') : props.onPress()} />
             <Icon raised reverse name="pencil"
               type='font-awesome' color='#512DA8'
-              onPress={() => props.onShowModal() } />
+              onPress={() => props.onShowModal()} />
+            <Icon
+              raised
+              reverse
+              name='share'
+              type='font-awesome'
+              color='#51D2A8'
+              style={styles.cardItem}
+              onPress={() => shareDish(dish.name, dish.description, baseUrl + dish.image)} />
           </View>
         </Card>
       </Animatable.View>
@@ -128,13 +146,13 @@ function RenderComments(props) {
 
   return (
     <Card title='Comments'>
-       <Animatable.View animation="fadeInUp" duration={2000} delay={1000}>
+      <Animatable.View animation="fadeInUp" duration={2000} delay={1000}>
         <FlatList
           data={comments}
           renderItem={renderCommentItem}
           keyExtractor={item => item.id.toString()}
         />
-       </Animatable.View>
+      </Animatable.View>
     </Card>
   );
 }
@@ -187,10 +205,10 @@ class Dishdetail extends Component {
 
     return (
       <ScrollView>
-        <RenderDish dish={this.props.dishes.dishes[+dishId]} 
+        <RenderDish dish={this.props.dishes.dishes[+dishId]}
           favorite={this.props.favorites.some(el => el === dishId)}
           onPress={() => this.markFavorite(dishId)}
-          onShowModal={() => this.toggleModal() }/>
+          onShowModal={() => this.toggleModal()} />
         <RenderComments comments={this.props.comments.comments.filter(comment => comment.dishId === dishId)} />
 
         <Modal
@@ -212,19 +230,19 @@ class Dishdetail extends Component {
             />
             <Input placeholder='Author'
               value={this.state.author}
-              onChangeText={(author) => this.setState({author})}
+              onChangeText={(author) => this.setState({ author })}
               leftIcon={{ type: 'font-awesome', name: 'user-o' }} />
 
             <Input placeholder='Comment'
               value={this.state.comment}
-              onChangeText={(comment) => this.setState({comment})}
+              onChangeText={(comment) => this.setState({ comment })}
               leftIcon={{ type: 'font-awesome', name: 'comment-o' }} />
 
             <View style={styles.buttons}>
               <Button
                 onPress={() => this.handleComment()}
                 title="Submit"
-                color="#512DA8"/>
+                color="#512DA8" />
             </View>
             <View style={styles.buttons}>
               <Button
